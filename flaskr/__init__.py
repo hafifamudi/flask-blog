@@ -30,13 +30,13 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
     
-    # register the blueprint instance
+    # register the auth blueprint instance
     from . import auth
     app.register_blueprint(auth.bp)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    # register the blog blueprint instance
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
