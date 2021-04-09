@@ -4,7 +4,7 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
-
+#function for call the database
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -15,20 +15,21 @@ def get_db():
     
     return g.db 
 
+#function for close the DB
 def close_db(e=None):
     db = g.pop('db', None)
 
     if db is not None:
         db.close()
 
-
+#init / make DB with schema.sql file 
 def init_db():
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-
+#make custome command with flask @click.command
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
@@ -36,6 +37,7 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
+#register the app to factory function
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)

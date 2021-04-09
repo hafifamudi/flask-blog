@@ -3,6 +3,7 @@ import os
 from flask import Flask
 
 
+#make factory function
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -29,6 +30,10 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
     
+    # register the blueprint instance
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     # a simple page that says hello
     @app.route('/hello')
     def hello():
