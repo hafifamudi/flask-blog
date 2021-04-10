@@ -5,11 +5,15 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-    <input type="submit" value="Save">
+  <form method="POST">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" name="title" class="form-control" aria-describedby="titleBlog" value="{{ request.form['title'] }}">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Body</label>
+      <textarea  name="body" class="form-control" >{{ request.form['body'] }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 {% endblock %}
